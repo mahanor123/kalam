@@ -3,7 +3,7 @@ import React, { PureComponent, Fragment } from 'react';
 import axios from 'axios';
 import { Button, Grid } from '@material-ui/core';
 import MainUiFile from '../ReUsableComponents/MainUiFile';
-import PartnersPaginationPriority from '../ReUsableComponents/PartnerPagination';
+import PartnersPaginationPriority from '../ReUsableComponents/PagePagination';
 import TableData from './TableData';
 import AddStudent from './AddStudent';
 import HeaderBar from '../HeaderBar';

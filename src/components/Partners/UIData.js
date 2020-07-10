@@ -3,7 +3,7 @@ import React, { PureComponent, Fragment } from 'react';
 import axios from 'axios';
 import { Button, Grid } from '@material-ui/core';
 import MainUiFile from '../ReUsableComponents/MainUiFile';
-import PartnersPaginationPriority from '../ReUsableComponents/PartnerPagination';
+import PartnersPaginationPriority from '../ReUsableComponents/PagePagination';
 import TableData from './TableData';
 import AddPartner from './AddPartner';
 import HeaderBar from '../HeaderBar';
@@ -44,26 +44,26 @@ export class UIData extends PureComponent {
     return new URLSearchParams(this.props.location.search);
   }
 
-    AddRowHandler = () => {
-      this.props.history.push('/partners/add');
-      console.log(this.state.isAddRow, 'isAdd row befor setState');
-      this.setState({ isAddRow: true }, () => {
-        if (this.state.isAddRow) {
-          console.log(this.state.isAddRow, 'inside if row befor setState');
-          this.setState({
-            isEditRow: false,
-            screenSize: window.screen.width,
-          });
-          // this.props.history.push('partners/add');
-        } else {
-          this.props.history.push('partners');
-        }
-      });
-      console.log(this.state.isAddRow, 'isAdd row after setState');
-    }
+  AddRowHandler = () => {
+    this.props.history.push('/partners/add');
+    console.log(this.state.isAddRow, 'isAdd row befor setState');
+    this.setState({ isAddRow: true }, () => {
+      if (this.state.isAddRow) {
+        console.log(this.state.isAddRow, 'inside if row befor setState');
+        this.setState({
+          isEditRow: false,
+          screenSize: window.screen.width,
+        });
+        // this.props.history.push('partners/add');
+      } else {
+        this.props.history.push('partners');
+      }
+    });
+    console.log(this.state.isAddRow, 'isAdd row after setState');
+  }
 
   EditRowHandler = ({ EachRowData, page, screenSize }) => {
-    console.log(page, 'paaaa');
+    console.log(EachRowData, 'naya');
     this.props.history.push(`/partners/${EachRowData.id}?page=${page}`);
     this.setState({
       isEditRow: true,
@@ -132,7 +132,7 @@ export class UIData extends PureComponent {
   render() {
     console.log(this.props, 'history');
     return (
-      <MainUiFile AddRowHandler={this.AddRowHandler} EditRowHandler={this.EditRowHandler} addHandleClose={this.addHandleClose} ListOfData={this.state.ListOfData} TableData={TableData} LeftPlane={this.LeftPlane} RightPlane={this.RightPlane} isAddRow={this.state.isAddRow} isEditRow={this.state.isEditRow} screenSize={this.state.screenSize} StylingForRow={this.state.StylingForRow} EditableTableRowValues={this.state.EditableTableRowValues} ShowingPage={this.state.ShowingPage} NameLIst={this.state.name} />
+      <MainUiFile AddRowHandler={this.AddRowHandler} EditRowHandler={this.EditRowHandler} addHandleClose={this.addHandleClose} ListOfData={this.state.ListOfData} TableData={TableData} LeftPlane={this.LeftPlane} RightPlane={this.RightPlane} isAddRow={this.state.isAddRow} isEditRow={this.state.isEditRow} screenSize={this.state.screenSize} StylingForRow={this.state.StylingForRow} EditableTableRowValues={this.state.EditableTableRowValues} ShowingPage={this.state.ShowingPage} NameLIst={this.state.name}  />
     );
   }
 }

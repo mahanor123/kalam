@@ -3,7 +3,7 @@ import {
   Container, Paper, Grid, Button, Typography,
 } from '@material-ui/core';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
-import FormBuilder from '../ReUsableComponents/PartnersFormBuilder';
+import FormBuilder from '../ReUsableComponents/FormBuilder';
 import FormData from './StudentsData';
 
 class ShowStudenData extends PureComponent {

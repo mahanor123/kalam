@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { Fragment, PureComponent } from 'react';
 import { Button, Grid } from '@material-ui/core';
-import PartnersPaginationPriority from './PartnerPagination';
+import PartnersPaginationPriority from './PagePagination';
 import HeaderBar from '../HeaderBar';
 
 

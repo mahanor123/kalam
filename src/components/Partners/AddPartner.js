@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 import FormData from './PartnersData';
-import FormBuilder from '../ReUsableComponents/PartnersFormBuilder';
+import FormBuilder from '../ReUsableComponents/FormBuilder';
 
 class AddPartner extends PureComponent {
   onClick = async ({ values }) => {
