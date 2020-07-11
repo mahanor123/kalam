@@ -19,16 +19,16 @@ class ShowStudenData extends PureComponent {
         <Grid container xs={12}>
           <Grid item xs={8} style={{ align: 'left' }}><h1 style={{ textAlign: 'right', marginTop: 100 }}>Edit Student</h1></Grid>
           <Grid style={{ marginTop: 112, textAlign: 'center' }} item xs={4}><CancelPresentationIcon onClick={this.props.onClickCLose} style={{ cursor: 'pointer' }}>Back</CancelPresentationIcon></Grid>
-          <FormBuilder
-            list={FormData}
-            onClick={this.onClick}
-            name={EachRowData.name}
-            id={EachRowData.id}
-            mobile={EachRowData.contacts[0].mobile}
-            stage={EachRowData.stage}
-            partnerName={EachRowData.partnerName}
-          />
         </Grid>
+        <FormBuilder
+          list={FormData}
+          onClick={this.onClick}
+          name={EachRowData.name}
+          id={EachRowData.id}
+          mobile={EachRowData.contacts[0].mobile}
+          stage={EachRowData.stage}
+          partnerName={EachRowData.partnerName}
+        />
       </Container>
     );
   }

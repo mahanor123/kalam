@@ -17,9 +17,9 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 function EnhancedTable({
-  data, onClick, PageShowing, StylingForRow, EditedData, isAddRow, isEditRow, TableData, NameLIst,
+  data, onClick, PageShowing, StylingForRow, EditedData, isAddRow, isEditRow, TableData, NameLIst, inputValue, uppp,
 }) {
-  console.log(onClick, 'nnnnn');
+  console.log(isEditRow, 'nnnnn');
   const [page, setPage] = React.useState(PageShowing);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [value, setValue] = React.useState('');
@@ -64,6 +64,7 @@ function EnhancedTable({
         updatedData();
       } else if (value) {
         const filterBySearchedValue = data.filter((element) => (element.name ? element.name.toLowerCase().includes(value) : 'no data'));
+        console.log(filterBySearchedValue, 'filterBySearchedValue');
         setUpdatedTable(filterBySearchedValue);
       } else {
         setUpdatedTable(data);
@@ -206,11 +207,12 @@ function EnhancedTable({
                     <TableRow
                       hover
                       key={EachRowData.id}
-                      style={(StylingForRow && EditedData.id === EachRowData.id) ? { backgroundColor: 'red' } : { backgroundColor: '' }}
+                      onClick={isEditRow ? null : (() => onClick({
+                        EachRowData, onClick, page, screenSize, value, updatedTable,
+                      }))}
+                      style={(StylingForRow && EditedData.id === EachRowData.id) ? { backgroundColor: 'red', cursor: 'pointer' } : { backgroundColor: '', cursor: 'pointer' }}
                     >
-                      {name().map((e) => (e.name === 'button' ? e.render({
-                        EachRowData, onClick, page, screenSize,
-                      }) : (e.name === 'Online class Tag' ? e.render({ EachRowData, onClick }) : e.render(EachRowData))))}
+                      {name().map((e) => (e.name === 'Online class Tag' ? e.render({ EachRowData, onClick }) : e.render(EachRowData)))}
 
                     </TableRow>
                   );

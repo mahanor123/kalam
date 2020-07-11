@@ -71,23 +71,6 @@ const TableData = [
     },
   },
   {
-    name: 'button',
-    priority: 1,
-    minWidth: 30,
-    render: function Show({
-      EachRowData, onClick, page, screenSize,
-    }) {
-      return (
-        <TableCell align="center" style={{ minWidth: this.minWidth }}>
-          <DetailsIcon
-            onClick={() => onClick({ EachRowData, page, screenSize })}
-            style={{ cursor: 'pointer', color: 'blue' }}
-          />
-        </TableCell>
-      );
-    },
-  },
-  {
     name: 'Online class Tag',
     priority: 9,
     minWidth: 30,

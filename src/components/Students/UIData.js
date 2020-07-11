@@ -27,13 +27,14 @@ export class UIData extends PureComponent {
   async componentDidMount() {
     const { params } = this.props.match;
     if (params.id) {
-      const resp = await axios.get(`http://join.navgurukul.org/api/partners/${params.id}`);
-      const EachRowData = resp.data.data;
+      const resp = await axios.get(`http://join.navgurukul.org/api/students/${params.id}`);
+      const EachRowData = resp.data.data[0];
+      console.log(EachRowData, 'resp');
       const query = this.useQuery();
       const page = query.get('page');
       this.EditRowHandler({ EachRowData, page });
     }
-    const response = await axios.get('http://join.navgurukul.org/api/students?dataType=softwareCourse');
+    const response = await axios.get('http://join.navgurukul.org/api/students');
     // console.log(response.data.data.length, 'response');
     this.setState({
       ListOfData: response.data.data,

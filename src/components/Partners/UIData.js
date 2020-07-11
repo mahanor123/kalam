@@ -21,14 +21,17 @@ export class UIData extends PureComponent {
       StylingForRow: false,
       screenSize: null,
       name: 'partners',
+      inputValue: null,
+      uppp: null,
     };
   }
 
   async componentDidMount() {
     const { params } = this.props.match;
     if (params.id) {
-      const resp = await axios.get(`http://join.navgurukul.org/api/partners/${params.id}`);
+      const resp = await axios.get(`http://join.navgurukul.org/api/partners/${params.id}`); 
       const EachRowData = resp.data.data;
+      console.log(EachRowData, 'resp');
       const query = this.useQuery();
       const page = query.get('page');
       this.EditRowHandler({ EachRowData, page });
@@ -62,7 +65,7 @@ export class UIData extends PureComponent {
     console.log(this.state.isAddRow, 'isAdd row after setState');
   }
 
-  EditRowHandler = ({ EachRowData, page, screenSize }) => {
+  EditRowHandler = ({ EachRowData, page, screenSize, value, updatedTable }) => {
     console.log(EachRowData, 'naya');
     this.props.history.push(`/partners/${EachRowData.id}?page=${page}`);
     this.setState({
@@ -72,6 +75,8 @@ export class UIData extends PureComponent {
       ShowingPage: page,
       // isDialogOpen: !this.state.isDialogOpen,
       screenSize,
+      inputValue: value,
+      updatedData: updatedTable,
     });
     localStorage.setItem('page', page);
   }
@@ -83,8 +88,8 @@ export class UIData extends PureComponent {
         <Grid item xs={12}><HeaderBar /></Grid>
         <Grid item xs={12} style={{ padding: 10 }}>
           {isEditRow
-            ? <PartnersPaginationPriority data={ListOfData} onClick={this.EditRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} EditedData={this.state.EditableTableRowValues} isEditRow={this.state.isEditRow} TableData={TableData} NameLIst={this.state.name} />
-            : <PartnersPaginationPriority data={ListOfData} onClick={this.AddRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} isAddRow={this.state.isAddRow} TableData={TableData} NameLIst={this.state.name} />
+            ? <PartnersPaginationPriority data={ListOfData} onClick={this.EditRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} EditedData={this.state.EditableTableRowValues} isEditRow={this.state.isEditRow} TableData={TableData} NameLIst={this.state.name} inputValue={this.state.inputValue} uppp={this.state.uppp} />
+            : <PartnersPaginationPriority data={ListOfData} onClick={this.AddRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} isAddRow={this.state.isAddRow} TableData={TableData} NameLIst={this.state.name} inputValue={this.state.inputValue} uppp={this.state.uppp} />
           }
         </Grid>
       </Fragment>

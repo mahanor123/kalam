@@ -20,7 +20,7 @@ const TableData = [
   },
   {
     name: 'notes',
-    priority: 5,
+    priority: 2,
     minWidth: 200,
     render: function Show(e) {
       return (<TableCell align="center">{e[this.name]}</TableCell>);
@@ -32,26 +32,6 @@ const TableData = [
     minWidth: 200,
     render: function Show(e) {
       return (<TableCell align="center">{e[this.name]}</TableCell>);
-    },
-  },
-  {
-    name: 'button',
-    priority: 2,
-    minWidth: 200,
-    render: function Show({ EachRowData, onClick, page, screenSize }) {
-      // console.log(EachRowData, 'bbbbbbbbbbbbbb');
-      return (
-        <TableCell align="center">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={() => onClick({ EachRowData, page, screenSize })}
-          >
-            Update
-          </Button>
-        </TableCell>
-      );
     },
   },
 ];

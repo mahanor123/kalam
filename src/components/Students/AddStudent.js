@@ -15,11 +15,11 @@ class ShowStudenData extends PureComponent {
         <Grid container xs={12}>
           <Grid item xs={8} style={{ align: 'left' }}><h1 style={{ textAlign: 'right' }}>Add Student</h1></Grid>
           <Grid style={{ marginTop: 28, textAlign: 'center' }} item xs={4}><CancelPresentationIcon onClick={this.props.handleClose} style={{ cursor: 'pointer' }}>Back</CancelPresentationIcon></Grid>
-          <FormBuilder
-            list={FormData}
-            onClick={this.onClick}
-          />
         </Grid>
+        <FormBuilder
+          list={FormData}
+          onClick={this.onClick}
+        />
       </Container>
     );
   }
