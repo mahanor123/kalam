@@ -196,7 +196,7 @@ function EnhancedTable({
             </Typography>
           </Grid>
           <Grid item xs={6} align="right">
-            <TextField onChange={onChange} value={value} label="Search" />
+            {search ? <TextField disabled onChange={onChange} value={value} label="Search" helperText="close Edit to search" /> : <TextField onChange={onChange} value={value} label="Search" />}
           </Grid>
         </Toolbar>
         <Table

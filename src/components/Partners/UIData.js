@@ -47,9 +47,9 @@ export class UIData extends PureComponent {
       this.EditRowHandler({
         EachRowData, page, screenSize, updatedTable, value,
       });
-      this.setState({
-        value,
-      });
+      // this.setState({
+      //   value,
+      // });
     }
     const response = await axios.get('http://join.navgurukul.org/api/partners');
     // console.log(response.data.data.length, 'response');

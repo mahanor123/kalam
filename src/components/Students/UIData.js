@@ -34,7 +34,20 @@ export class UIData extends PureComponent {
       console.log(EachRowData, 'resp');
       const query = this.useQuery();
       const page = query.get('page');
-      this.EditRowHandler({ EachRowData, page });
+      let screenSize;
+      const value = query.get('name');
+      const response = await axios.get('http://join.navgurukul.org/api/students');
+      // console.log(response.data.data.length, 'response');
+      const updatedTable = response.data.data;
+      this.setState({
+        ListOfData: response.data.data,
+      });
+      this.EditRowHandler({
+        EachRowData, page, screenSize, updatedTable, value,
+      });
+      // this.setState({
+      //   value,
+      // });
     }
     const response = await axios.get('http://join.navgurukul.org/api/students');
     // console.log(response.data.data.length, 'response');
@@ -65,7 +78,9 @@ export class UIData extends PureComponent {
       console.log(this.state.isAddRow, 'isAdd row after setState');
     }
 
-  EditRowHandler = ({ EachRowData, page, screenSize, value, updatedTable, }) => {
+  EditRowHandler = ({
+    EachRowData, page, screenSize, value, updatedTable,
+  }) => {
     console.log(page, 'paaaa');
     if (value) {
       this.props.history.push(`/Students/${EachRowData.id}?page=${page}&name=${value}`);
@@ -84,36 +99,17 @@ export class UIData extends PureComponent {
     localStorage.setItem('page', page);
   }
 
-
-  EditRowHandler = ({
-    EachRowData, page, screenSize, value, updatedTable,
-  }) => {
-    console.log(updatedTable, 'naya');
-    if (value) {
-      this.props.history.push(`/partners/${EachRowData.id}?page=${page}&name=${value}`);
-    } else {
-      this.props.history.push(`/partners/${EachRowData.id}?page=${page}`);
-    }
-    this.setState({
-      isEditRow: true,
-      StylingForRow: true,
-      EditableTableRowValues: EachRowData,
-      ShowingPage: page,
-      screenSize,
-      inputValue: value,
-      DataNow: updatedTable,
-    });
-    localStorage.setItem('page', page);
-  }
   LeftPlane = ({ ListOfData, isEditRow, isAddRow }) => {
     console.log(ListOfData, 'left');
     return (
       <Fragment>
         <Grid item xs={12}><HeaderBar /></Grid>
         <Grid item xs={12} style={{ padding: 10 }}>
-          {isEditRow
-            ? <PartnersPaginationPriority data={ListOfData} onClick={this.EditRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} EditedData={this.state.EditableTableRowValues} isEditRow={this.state.isEditRow} TableData={TableData} NameLIst={this.state.name} />
-            : <PartnersPaginationPriority data={ListOfData} onClick={this.AddRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} isAddRow={this.state.isAddRow} TableData={TableData} NameLIst={this.state.name} />
+          {this.state.isEditRow
+            ? <PartnersPaginationPriority data={this.state.DataNow} onClick={this.EditRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} EditedData={this.state.EditableTableRowValues} isEditRow={this.state.isEditRow} TableData={TableData} NameLIst={this.state.name} search={this.state.inputValue} DataNow={this.state.DataNow} />
+            : this.state.isAddRow
+              ? <PartnersPaginationPriority data={this.state.ListOfData} onClick={this.AddRowHandler} PageShowing={this.state.ShowingPage} StylingForRow={this.state.StylingForRow} isAddRow={this.state.isAddRow} TableData={TableData} NameLIst={this.state.name} />
+              : null
           }
         </Grid>
       </Fragment>
@@ -160,7 +156,7 @@ export class UIData extends PureComponent {
   render() {
     console.log(this.props, 'history');
     return (
-      <MainUiFile AddRowHandler={this.AddRowHandler} EditRowHandler={this.EditRowHandler} addHandleClose={this.addHandleClose} ListOfData={this.state.ListOfData} TableData={TableData} LeftPlane={this.LeftPlane} RightPlane={this.RightPlane} isAddRow={this.state.isAddRow} isEditRow={this.state.isEditRow} screenSize={this.state.screenSize} StylingForRow={this.state.StylingForRow} EditableTableRowValues={this.state.EditableTableRowValues} ShowingPage={this.state.ShowingPage} NameLIst={this.state.name} />
+      <MainUiFile AddRowHandler={this.AddRowHandler} EditRowHandler={this.EditRowHandler} addHandleClose={this.addHandleClose} ListOfData={this.state.ListOfData} TableData={TableData} LeftPlane={this.LeftPlane} RightPlane={this.RightPlane} isAddRow={this.state.isAddRow} isEditRow={this.state.isEditRow} screenSize={this.state.screenSize} StylingForRow={this.state.StylingForRow} EditableTableRowValues={this.state.EditableTableRowValues} ShowingPage={this.state.ShowingPage} NameLIst={this.state.name} value={this.state.value} DataNow={this.state.DataNow} />
     );
   }
 }
