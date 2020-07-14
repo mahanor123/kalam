@@ -21,13 +21,14 @@ function EnhancedTable({
 }) {
   const [page, setPage] = React.useState(PageShowing);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [value, setValue] = React.useState(search || '');
+  const [value, setValue] = React.useState('');
   const [isValue, setIsValue] = React.useState(true);
   const [updatedTable, setUpdatedTable] = React.useState([]);
   const [ascending, setAscending] = React.useState(1);
   const [columnToSort, setColumnToSort] = React.useState('');
 
   console.log(search, 'totalData from pagination');
+  console.log(value, 'value')
   const updatedData = async () => {
     // console.log('updatedData');
     await setUpdatedTable(Object.assign([], data));
@@ -68,8 +69,6 @@ function EnhancedTable({
       if (value.length <= 0 && search && isValue) {
         setValue(search);
         setIsValue(false);
-      } else if (updatedTable.length < 1) {
-        updatedData();
       } else if (value) {
         const filterBySearchedValue = data.filter((element) => {
           if (element.name) {
@@ -78,6 +77,8 @@ function EnhancedTable({
           return filterBySearchedValue;
         });
         setUpdatedTable(filterBySearchedValue);
+      } else if (updatedTable.length < 1) {
+        updatedData();
       } else {
         setUpdatedTable(data);
       }

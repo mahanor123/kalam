@@ -21,6 +21,8 @@ export class UIData extends PureComponent {
       StylingForRow: false,
       screenSize: null,
       name: 'Students',
+      inputValue: '',
+      DataNow: [],
     };
   }
 
@@ -63,20 +65,46 @@ export class UIData extends PureComponent {
       console.log(this.state.isAddRow, 'isAdd row after setState');
     }
 
-  EditRowHandler = ({ EachRowData, page, screenSize }) => {
+  EditRowHandler = ({ EachRowData, page, screenSize, value, updatedTable, }) => {
     console.log(page, 'paaaa');
-    this.props.history.push(`/Students/${EachRowData.id}?page=${page}`);
+    if (value) {
+      this.props.history.push(`/Students/${EachRowData.id}?page=${page}&name=${value}`);
+    } else {
+      this.props.history.push(`/Students/${EachRowData.id}?page=${page}`);
+    }
     this.setState({
       isEditRow: true,
       StylingForRow: true,
       EditableTableRowValues: EachRowData,
       ShowingPage: page,
-      // isDialogOpen: !this.state.isDialogOpen,
       screenSize,
+      inputValue: value,
+      DataNow: updatedTable,
     });
     localStorage.setItem('page', page);
   }
 
+
+  EditRowHandler = ({
+    EachRowData, page, screenSize, value, updatedTable,
+  }) => {
+    console.log(updatedTable, 'naya');
+    if (value) {
+      this.props.history.push(`/partners/${EachRowData.id}?page=${page}&name=${value}`);
+    } else {
+      this.props.history.push(`/partners/${EachRowData.id}?page=${page}`);
+    }
+    this.setState({
+      isEditRow: true,
+      StylingForRow: true,
+      EditableTableRowValues: EachRowData,
+      ShowingPage: page,
+      screenSize,
+      inputValue: value,
+      DataNow: updatedTable,
+    });
+    localStorage.setItem('page', page);
+  }
   LeftPlane = ({ ListOfData, isEditRow, isAddRow }) => {
     console.log(ListOfData, 'left');
     return (

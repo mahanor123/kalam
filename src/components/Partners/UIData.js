@@ -21,13 +21,14 @@ export class UIData extends PureComponent {
       StylingForRow: false,
       screenSize: null,
       name: 'partners',
-      value: '',
+      inputValue: '',
       DataNow: [],
     };
   }
 
   async componentDidMount() {
     const { params } = this.props.match;
+    console.log(this.state.screenSizeisEditRow, 'kkkkkk');
     if (params.id) {
       const resp = await axios.get(`http://join.navgurukul.org/api/partners/${params.id}`);
       const EachRowData = resp.data.data;
@@ -35,8 +36,14 @@ export class UIData extends PureComponent {
       const query = this.useQuery();
       const page = query.get('page');
       let screenSize;
-      const updatedTable = EachRowData;
+
       const value = query.get('name');
+      const response = await axios.get('http://join.navgurukul.org/api/partners');
+      // console.log(response.data.data.length, 'response');
+      const updatedTable = response.data.data;
+      this.setState({
+        ListOfData: response.data.data,
+      });
       this.EditRowHandler({
         EachRowData, page, screenSize, updatedTable, value,
       });
@@ -76,7 +83,7 @@ export class UIData extends PureComponent {
   EditRowHandler = ({
     EachRowData, page, screenSize, value, updatedTable,
   }) => {
-    console.log(value, 'naya');
+    console.log(updatedTable, 'naya');
     if (value) {
       this.props.history.push(`/partners/${EachRowData.id}?page=${page}&name=${value}`);
     } else {
