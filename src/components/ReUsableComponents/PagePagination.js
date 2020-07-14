@@ -17,23 +17,25 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 function EnhancedTable({
-  data, onClick, PageShowing, StylingForRow, EditedData, isAddRow, isEditRow, TableData, NameLIst, inputValue, uppp,
+  data, ListOfData, onClick, PageShowing, StylingForRow, EditedData, isAddRow, isEditRow, TableData, NameLIst, search, DataNow,
 }) {
-  console.log(isEditRow, 'nnnnn');
   const [page, setPage] = React.useState(PageShowing);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState(search || '');
+  const [isValue, setIsValue] = React.useState(true);
   const [updatedTable, setUpdatedTable] = React.useState([]);
   const [ascending, setAscending] = React.useState(1);
   const [columnToSort, setColumnToSort] = React.useState('');
 
-
-  // console.log(updatedTable, '9990000000');
-
+  console.log(search, 'totalData from pagination');
   const updatedData = async () => {
+    // console.log('updatedData');
     await setUpdatedTable(Object.assign([], data));
+    // console.log(updatedTable, 'updatedData', '===============');
   };
   const handleChangePage = (event, newPage) => {
+    // console.log(data.length, '-----');
+    // console.log(newPage, rowsPerPage, 'New');
     setPage(newPage);
   };
 
@@ -42,6 +44,7 @@ function EnhancedTable({
   };
 
   const onChange = (e) => {
+    // console.log(value, 'valueOnChange');
     setValue(e.target.value);
   };
   function getWindowDimensions() {
@@ -59,12 +62,21 @@ function EnhancedTable({
       getWindowDimensions()
     );
 
+    // console.log(location.pathname, 'pathname');
     useEffect(() => {
-      if (updatedTable.length < 1) {
+      console.log(value, updatedTable.length, 'lomal');
+      if (value.length <= 0 && search && isValue) {
+        setValue(search);
+        setIsValue(false);
+      } else if (updatedTable.length < 1) {
         updatedData();
       } else if (value) {
-        const filterBySearchedValue = data.filter((element) => (element.name ? element.name.toLowerCase().includes(value) : 'no data'));
-        console.log(filterBySearchedValue, 'filterBySearchedValue');
+        const filterBySearchedValue = data.filter((element) => {
+          if (element.name) {
+            return (element.name.toLowerCase().search(value.toLowerCase()) !== -1) ? 'No Data' : filterBySearchedValue;
+          }
+          return filterBySearchedValue;
+        });
         setUpdatedTable(filterBySearchedValue);
       } else {
         setUpdatedTable(data);
@@ -85,8 +97,6 @@ function EnhancedTable({
     for (let i = 1; i <= TableData.length; i += 1) {
       // eslint-disable-next-line no-restricted-syntax
       for (const j of TableData) {
-        // console.log(j.priority,"jjjjjjjjjjjjjjjjj");
-
         if (i === j.priority) {
           l.push(j);
           break;
@@ -96,6 +106,7 @@ function EnhancedTable({
     return l;
   }
 
+
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
   const { screenSize } = useWindowDimensions();
 
@@ -103,8 +114,8 @@ function EnhancedTable({
     const finallist = [];
     let calculation = 0;
     const SizeOfTable = isAddRow || isEditRow ? (0.75 * screenSize - 16 - 20) : screenSize;
-    console.log(screenSize, 'size of window');
-    console.log(SizeOfTable, 'size f table');
+    // console.log(screenSize, 'size of window');
+    // console.log(SizeOfTable, 'size f table');
 
     // eslint-disable-next-line no-restricted-syntax
     for (const i of GetData()) {
@@ -116,7 +127,7 @@ function EnhancedTable({
     if (finallist.length === 0) {
       finallist.push(GetData()[0]);
     }
-    console.log(finallist, 'finallist');
+    // console.log(finallist, 'finallist');
     return finallist;
   }
 
@@ -131,8 +142,8 @@ function EnhancedTable({
     setColumnToSort(columnName);
     if (ascending === 1) {
       const sortedData = updatedTable.sort((a, b) => {
-        let fa; let
-          fb;
+        let fa;
+        let fb;
         if (typeof a[columnName] === 'number') {
           fa = a[columnName];
           fb = b[columnName];
@@ -161,6 +172,17 @@ function EnhancedTable({
       setAscending(2);
       setUpdatedTable(reverseData);
     }
+  };
+
+  const sortRows = (updatedTable, sortColumn, sortDirection) => (rows) => {
+    const comparer = (a, b) => {
+      if (sortDirection === 'ASC') {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } if (sortDirection === 'DESC') {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      }
+    };
+    return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
   };
   return (
     <Container style={(rowsPerPage > 5) ? { height: '510px', overflow: 'auto' } : null} component={Paper}>
@@ -208,7 +230,7 @@ function EnhancedTable({
                       hover
                       key={EachRowData.id}
                       onClick={isEditRow ? null : (() => onClick({
-                        EachRowData, onClick, page, screenSize, value, updatedTable,
+                        EachRowData, onClick, page, screenSize, value, updatedTable, data,
                       }))}
                       style={(StylingForRow && EditedData.id === EachRowData.id) ? { backgroundColor: 'red', cursor: 'pointer' } : { backgroundColor: '', cursor: 'pointer' }}
                     >
@@ -218,7 +240,7 @@ function EnhancedTable({
                   );
                 })
               : ''
-              }
+            }
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={6} />

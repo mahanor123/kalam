@@ -7,9 +7,9 @@ import HeaderBar from '../HeaderBar';
 
 class Partners extends PureComponent {
   render() {
-    console.log(this.props, 'abhi');
+    // console.log(this.props, 'abhi');
     const {
-      isAddRow, screenSize, isEditRow, ListOfData, AddRowHandler, LeftPlane, RightPlane, EditRowHandler, NameLIst,
+      isAddRow, screenSize, isEditRow, ListOfData, AddRowHandler, LeftPlane, RightPlane, EditRowHandler, NameLIst, value, DataNow,
     } = this.props;
     return (
       <Fragment>
@@ -62,7 +62,7 @@ class Partners extends PureComponent {
                     {' '}
                     {NameLIst}
                   </Button>
-                  <Grid item xs={12} style={{ margin: 10 }}><PartnersPaginationPriority data={ListOfData} onClick={EditRowHandler} PageShowing={0} TableData={this.props.TableData} NameLIst={NameLIst} /></Grid>
+                  <Grid item xs={12} style={{ margin: 10 }}><PartnersPaginationPriority DataNow={DataNow} data={ListOfData} onClick={EditRowHandler} PageShowing={0} TableData={this.props.TableData} NameLIst={NameLIst} search={value} /></Grid>
                 </Fragment>
               )
       }
