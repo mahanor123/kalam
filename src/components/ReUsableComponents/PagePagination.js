@@ -230,9 +230,12 @@ function EnhancedTable({
                     <TableRow
                       hover
                       key={EachRowData.id}
-                      onClick={isEditRow ? null : (() => onClick({
+                      // onClick={isEditRow ? null : (() => onClick({
+                      //   EachRowData, onClick, page, screenSize, value, updatedTable, data,
+                      // }))}
+                      onClick={() => onClick({
                         EachRowData, onClick, page, screenSize, value, updatedTable, data,
-                      }))}
+                      })}
                       style={(StylingForRow && EditedData.id === EachRowData.id) ? { backgroundColor: 'red', cursor: 'pointer' } : { backgroundColor: '', cursor: 'pointer' }}
                     >
                       {name().map((e) => (e.name === 'Online class Tag' ? e.render({ EachRowData, onClick }) : e.render(EachRowData)))}

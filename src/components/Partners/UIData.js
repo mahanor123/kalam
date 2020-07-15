@@ -83,7 +83,7 @@ export class UIData extends PureComponent {
   EditRowHandler = ({
     EachRowData, page, screenSize, value, updatedTable,
   }) => {
-    console.log(updatedTable, 'naya');
+    console.log(EachRowData, 'naya');
     if (value) {
       this.props.history.push(`/partners/${EachRowData.id}?page=${page}&name=${value}`);
     } else {
